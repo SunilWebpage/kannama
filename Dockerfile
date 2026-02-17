@@ -60,61 +60,32 @@ RUN gem install bundler -v 2.4.19 && \
 
 # Clean caches safely
 RUN rm -rf "${BUNDLE_PATH}"/ruby/*/cache || true
-RUN rm -rf "${BUNDLE_PATHLE_PATH}"/}"/ruby/*/ruby/*/bundler/gemsbundler/gems/*/./*/.git ||git || true
+RUN rm -rf "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git || true
 
- true
-
-# Pre# Precompile bootcompile bootsnapsnap
-
-RUNRUN bundle exec bootsn bundle execap pre bootsnap precompile -j compile -1 --gemfilej 1 --gemfile
+# Precompile bootsnap
+RUN bundle exec bootsnap precompile -j 1 --gemfile
 
 # Copy app code
+COPY . .
 
+# Precompile bootsnap for app code
+RUN bundle exec bootsnap precompile -j 1 app/ lib/
 
-# Copy appCOPY . code
- .
-
-# PrecompileCOPY . .
-
-# bootsn Precompile bootsnap for app codeap for
-RUN bundle exec app code bootsn
-RUN bundle execap precompile - bootsnap prej compile -1 app/ libj 1 app/
-
-#/ lib Precompile Rails assets/
-
-# Precompile without RAILS Rails assets without RA_MASTERILS__KEY
-RUN SECMASTER_KEY
-RET_KEYRUN SEC_BASE_DURET_KEY_BASE_DUMMY=1MMY=1 ./bin/rails assets:precompile
+# Precompile Rails assets without RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Final production image
- ./bin/rails assets:precompile
+FROM base
 
-# Final production image
-FROM baseFROM base
-
-# Non-root
-
-# Non-root user for user for security
+# Non-root user for security
 RUN groupadd --system --gid 1000 rails && \
- security
-RUN groupadd --system --gid 1000 rails && \
-    useradd rails    useradd rails --uid 100 --uid 1000 --gid0 --gid 1000 -- 1000 --create-home --create-homeshell /bin --shell /bin/bash
-USER /bash
-USER 10001000:1000
+    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash
+USER 1000:1000
 
-:1000
+# Copy built gems and app code
+COPY --chown=rails:rails --from=build /usr/local/bundle /usr/local/bundle
+COPY --chown=rails:rails --from=build /rails /rails
 
-# Copy# Copy built gems and app built gems and app code
- code
-COPY --COPY --chown=railschown=rails:rails --from:rails --from=build=build /usr/local/b /usr/local/bundle /usr/localundle /usr/local/bundle/bundle
-COPY --ch
-COPY --chown=rails:rails --own=rails:rails --from=from=build /build /rails /rails /rails
-
-rails
-
-EXPOSEEXPOSE 80 80
-ENT
-ENTRYPORYPOINT ["INT ["/rails/rails/bin/d/bin/docker-entrypoint"]
-CMD ["./ocker-entrypoint"]
-CMD ["./bin/thbin/thrust",rust", "./bin/rails", " "./bin/rails", "server"]
-server"]
+EXPOSE 80
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+CMD ["./bin/thrust", "./bin/rails", "server"]
