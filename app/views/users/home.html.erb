@@ -1,0 +1,73 @@
+<div class="min-h-auto bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 relative overflow-y-auto overflow-x-hidden font-sans pb-20">
+
+  <!-- Confetti Container (You can generate these with JS for randomness, but here are some CSS placeholders) -->
+  <% 50.times do |i| %>
+    <div class="confetti" style="left: <%= rand(100) %>%; animation-delay: <%= rand(50) / 10.0 %>s; background-color: <%= ['#ff69b4', '#87ceeb', '#ffff00', '#7fffd4'].sample %>;"></div>
+  <% end %>
+
+  <!-- Navigation / Header -->
+  <nav class="w-full flex justify-between items-center p-6 text-white relative z-20">
+    <div class="text-2xl font-bold tracking-wider drop-shadow-md">For You ❤️</div>
+    <%= button_to "Sign Out", user_path(@user), method: :delete, class: "bg-white/20 hover:bg-white/30 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold transition" if @user %> 
+    <!-- Note: Make sure you have a sign out route/method if you add this button, or just remove it if strictly visual -->
+  </nav>
+
+  <!-- Main Content Area -->
+  <div class="container mx-auto px-4 pt-10 relative z-10 flex flex-col items-center">
+    
+    <!-- Hero Section -->
+    <div class="text-center mb-16 animate-fade-in-up">
+      <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-lg">
+        Happy Birthday, My Love! 🎉
+      </h1>
+      <p class="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto leading-relaxed">
+        To the person who makes my world brighter, my heart fuller, and my life complete. Today is all about YOU.
+      </p>
+    </div>
+
+    <!-- Audio Player Section -->
+    <div class="glass-card p-6 mb-16 w-full max-w-lg flex flex-col items-center gap-4">
+      <p class="text-white font-medium">Plays our favorite song 🎵</p>
+      <!-- Replace 'song.mp3' with your actual audio file path in public/ or assets/ -->
+      <audio controls autoplay loop>
+        <source src="/song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <!-- Photo Gallery Grid -->
+    <div class="w-full max-w-4xl mb-16">
+      <h2 class="text-3xl font-bold text-white mb-8 text-center">Our Beautiful Memories 📸</h2>
+      <div class="photo-grid">
+        <!-- Placeholders: Replace src with actual image paths -->
+        <% 8.times do |i| %>
+          <div class="photo-item glass-card border-0">
+            <img src="https://picsum.photos/seed/<%= i+100 %>/400/400" alt="Memory <%= i+1 %>">
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Long Letter / Message Section -->
+    <div class="glass-card p-8 md:p-12 max-w-3xl w-full text-center mb-12">
+      <h2 class="text-3xl font-bold text-white mb-6">A Letter from My Heart 💌</h2>
+      <div class="text-white/90 space-y-4 text-lg leading-relaxed text-left font-serif">
+        <p>My Dearest,</p>
+        <p>
+          As you celebrate another year of your wonderful life, I want to take a moment to tell you how incredibly special you are to me.
+          From the moment you walked into my life, everything changed for the better. Your smile is my daily motivation, and your laughter is my favorite sound.
+        </p>
+        <p>
+          I hope this little surprise brings a smile to your face. I wanted to create something that lasts, just like my love for you.
+          May this year bring you as much joy as you bring to everyone around you.
+        </p>
+        <p>
+          I love you more than words can say.
+        </p>
+        <p class="text-right mt-8 font-bold">- Always Yours</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>

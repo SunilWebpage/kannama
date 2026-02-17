@@ -1,0 +1,66 @@
+<!-- Main Container -->
+<div class="min-h-[calc(100vh-0rem)] bg-gradient-to-br from-pink-400 via-purple-300 to-indigo-400 flex items-center justify-center relative overflow-hidden font-sans">
+
+  <!-- Animated Background Elements -->
+  <ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+  <!-- Glassmorphism Card -->
+  <div class="glass-card p-10 w-full max-w-md relative z-10 mx-4 transform transition-all hover:scale-[1.01] duration-500">
+    
+    <!-- Romantic Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-extrabold text-white drop-shadow-md tracking-tight mb-2">
+        Welcome HomesDGS
+      </h1>
+      <p class="text-white/90 text-lg font-medium italic">
+        "Every day with you is a celebration"
+      </p>
+    </div>
+
+    <!-- Login Form -->
+    <%= form_with model: User.new, url: login_path, method: :post, class: "space-y-6" do |form| %>
+      
+      <div>
+        <label class="block text-white text-sm font-bold mb-2 ml-1" for="username">
+          Username
+        </label>
+        <%= form.text_field :username, 
+            class: "glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-pink-300", 
+            placeholder: "Enter your sweet name" %>
+      </div>
+
+      <div>
+        <label class="block text-white text-sm font-bold mb-2 ml-1" for="password">
+          Password
+        </label>
+        <%= form.password_field :password, 
+            class: "glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-pink-300", 
+            placeholder: "Your secret code" %>
+      </div>
+
+      <div class="pt-2">
+        <%= form.submit "Begin the Surprise ❤️", 
+            class: "w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg transform transition hover:-translate-y-1 hover:shadow-xl cursor-pointer" %>
+      </div>
+
+    <% end %>
+
+    <!-- Footer Decoration -->
+    <div class="mt-8 text-center text-white/70 text-sm">
+      <p>Made with ❤️ for You</p>
+    </div>
+
+  </div>
+
+</div>
