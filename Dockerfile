@@ -43,7 +43,8 @@ RUN apt-get update -qq && \
         libvips-dev \
         nodejs \
         ca-certificates \
-        pkg-config && \
+        pkg-config \
+        libyaml-dev && \  # Added libyaml-dev for psych gem
     # Add Yarn's official repository (modern method without apt-key)
     curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarn-archive-keyring.gpg >/dev/null && \
     echo "deb [signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list && \
