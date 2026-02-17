@@ -33,20 +33,23 @@ ENV RAILS_ENV="production" \
 # Build stage
 FROM base AS build
 
+# Install build dependencies for gem compilation
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
+        build-essential \
         curl \
         default-mysql-client \
         libjemalloc2 \
         libvips-dev \
         nodejs \
-        ca-certificates && \
+        ca-certificates \
+        pkg-config && \
     # Add Yarn's official repository (modern method without apt-key)
     curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarn-archive-keyring.gpg >/dev/null && \
     echo "deb [signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update -qq && \
     apt-get install --no-install-recommends -y yarn && \
-    # Clean up - REMOVED the jemalloc symlink line since it already exists from base stage
+    # Clean up
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
 # Copy Gemfiles and vendor directory
