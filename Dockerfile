@@ -42,6 +42,7 @@ RUN apt-get update -qq && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update -qq && \
     apt-get install --no-install-recommends -y yarn && \
+    # Jemalloc symlink
     ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
