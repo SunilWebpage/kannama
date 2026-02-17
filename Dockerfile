@@ -5,15 +5,20 @@ FROM ruby:$RUBY_VERSION-slim AS base
 
 WORKDIR /rails
 
-# Base packages + jemalloc + libvips
+# Base packages + jemalloc + libvips + yarn from official repo
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
         curl \
         default-mysql-client \
         libjemalloc2 \
         libvips-dev \
-        nodejs \
-        yarn && \
+        nodejs && \
+    # Add Yarn's official repository and install Yarn
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update -qq && \
+    apt-get install --no-install-recommends -y yarn && \
+    # Clean up and setup jemalloc
     ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
@@ -42,8 +47,6 @@ RUN apt-get update -qq && \
     # Clean up
     ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
-
-
 
 # Copy Gemfiles and vendor directory
 COPY Gemfile Gemfile.lock ./
@@ -84,4 +87,3 @@ COPY --chown=rails:rails --from=build /rails /rails
 EXPOSE 80
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 CMD ["./bin/thrust", "./bin/rails", "server"]
-
