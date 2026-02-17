@@ -46,8 +46,7 @@ RUN apt-get update -qq && \
     echo "deb [signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update -qq && \
     apt-get install --no-install-recommends -y yarn && \
-    # Clean up
-    ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
+    # Clean up - REMOVED the jemalloc symlink line since it already exists from base stage
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
 # Copy Gemfiles and vendor directory
