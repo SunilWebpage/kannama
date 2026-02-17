@@ -27,26 +27,21 @@ ENV RAILS_ENV="production" \
 # Build stage
 FROM base AS build
 
-# Install base packages + nodejs + Yarn + jemalloc + libvips
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
         curl \
-        gnupg2 \
-        ca-certificates \
         default-mysql-client \
         libjemalloc2 \
         libvips-dev \
         nodejs && \
-    # Add Yarn repository
+    # Add Yarn's official repository and install Yarn
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update -qq && \
     apt-get install --no-install-recommends -y yarn && \
-    # Jemalloc symlink
+    # Clean up
     ln -s /usr/lib/$(uname -m)-linux-gnu/libjemalloc.so.2 /usr/local/lib/libjemalloc.so && \
-    # Clean up apt cache safely
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
-
 
 
 
