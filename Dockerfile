@@ -45,12 +45,12 @@ RUN apt-get update -qq && \
         ca-certificates \
         pkg-config \
         libyaml-dev && \  # Added libyaml-dev for psych gem
-    # Add Yarn's official repository (modern method without apt-key)
-    curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarn-archive-keyring.gpg >/dev/null && \
+
+# Add Yarn's official repository (modern method without apt-key)
+RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarn-archive-keyring.gpg >/dev/null && \
     echo "deb [signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update -qq && \
     apt-get install --no-install-recommends -y yarn && \
-    # Clean up
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives
 
 # Copy Gemfiles and vendor directory
