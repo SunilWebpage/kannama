@@ -6,7 +6,7 @@ gem "rails", "~> 8.1.2"
 gem "propshaft"
 # Use mysql as the database for Active Record
 #gem "mysql2", "~> 0.5"
-gem "pg", "~> 1.5"
+gem 'mysql2', '>= 0.5.5', '< 1.0'
 
 
 # Use the Puma web server [https://github.com/puma/puma]
